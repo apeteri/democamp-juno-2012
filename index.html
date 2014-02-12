@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+
+<head>
+<title>Extending JDT</title>
+<meta charset='utf-8'>
+<script src='./scripts/slides.js'></script>
+</head>
+
+<body style='display: none'>
+    <section class='slides layout-regular template-default'>
+    
+        <article class='fill current'>
+            <p>
+                <img src='./images/run.png'>
+            </p>
+        </article>
+
+        <article class='logo'>
+            <h1>
+                Extending JDT
+            </h1>
+            <p>
+                András Péteri, B2i Healthcare <br> Jun 22, 2012
+            </p>
+        </article>
+
+        <article>
+            <h3>JDT/Core feature highlights <sup>[1]</sup></h3>
+            <ul>
+                <li>Java Model, AST</li>
+                <li>Parser</li>
+                <li>Error-tolerant, incremental compiler (<code>ecj</code>)</li>
+                <li>No UI dependency</li>
+                <li>No version dependency on any JDK (1.4 and up)</li>
+            </ul>
+            <div class='source'>
+                [1] <a href='http://wiki.eclipse.org/JDT_Core'>JDT Core - Eclipse Wiki</a>
+            </div>
+        </article>
+
+        <article>
+            <h3>Running <code>ecj</code> from the command line <sup>[2][3]</sup></h3>
+            <section>
+                <pre>$ java -jar org.eclipse.jdt.core_&lt;version&gt;.jar</pre>
+            </section>
+            <ul>
+                <li>Available separately as <code>ecj.jar</code></li>
+                <li><code>o.e.j.internal.compiler.batch.Main:3851</code></li>
+                <li>Programmatic access</li>
+                <li>Support for <code>ant</code></li>
+            </ul>
+            <div class='source'>
+                [2] <a href='http://blog.deepakazad.com/2010/05/ecj-eclipse-java-compiler.html'>The Coder Lounge: ECJ - Eclipse
+                    Compiler for Java</a><br>
+                [3] <a href='http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Ftasks%2Ftask-using_batch_compiler.htm'>
+                    Eclipse documentation - Using the batch compiler</a>
+            </div>
+        </article>
+
+        <article>
+            <h2>Extension = Code modification</h2>
+        </article>
+        
+        <article>
+            <h3>Grammar changes <sup>[4]</sup></h3>
+            <ul>
+                <li>Uses the Jikes parser generator <sup>[5]</sup></li>
+                <li>Modify <code>java.g</code></li>
+                <li>Regenerate and update pieces of the codebase</li>
+                <li>Hope for the best</li>
+            </ul>
+            <div class='source'>
+                [4] <a href='http://www.eclipse.org/jdt/core/howto/generate%20parser/generateParser.html'>JDT Core / HowTo: Generate the Parser</a><br>
+                [5] <a href='http://sourceforge.net/projects/jikes/'>IBM Jikes Compiler for the Java Language</a>
+            </div>
+        </article>
+        
+        <article class='smaller'>
+            <h3>Grammar changes (cont.)</h3>
+            <q> Changing the parser is a risky operation if you miss one of the steps above. The resulting parser
+                can be completely unpredictable. </q>
+        </article>
+        
+        <article>
+            <h3>Grammar changes (demo)</h3>
+            <section>
+                <pre>public class Hello
+begin
+    public static void main(String[] args)
+    begin
+        System.out.println("Hello Pava world!");
+    end
+end</pre>
+            </section>
+        </article>
+        
+        <article>
+            <h2>Extension = Instrumentation</h2>
+        </article>
+        
+        <article>
+            <h3>Project Lombok <sup>[6][7]</sup></h3>
+            <ul>
+                <li>Annotation processing (<code>APT</code>)</li>
+                <li>Can be used with plain <code>javac</code>, NetBeans, Eclipse</li>
+                <li>Minimal runtime component</li>
+                <li><code>delombok</code>: reversible</li>
+                <li>IDE support: java instrumentation agent<sup>[8]</sup></li>
+            </ul>
+            <div class='source'>
+                [6] <a href='http://projectlombok.org/'>Project Lombok home page</a><br>
+                [7] <a href='http://jnb.ociweb.com/jnb/jnbJan2010.html'>Reducing Boilerplate Code with Project Lombok</a><br>
+                [8] <a href='http://docs.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html'>java.lang.instrument (Java Platform SE 6)</a>
+            </div>
+        </article>
+        
+        <article>
+            <h2>Extension = Aspects &amp; Weaving</h2>
+        </article>
+        
+        <article>
+            <h3>Scala tooling <sup>[9]</sup></h3>
+            <p>A small selection of features:</p>
+            <ul>
+                <li>Mixed Java/Scala project support</li>
+                <li>Code completion, indentation, refactoring Scala code</li>
+                <li>OSGi bundle, Eclipse plug-in development in Scala</li>
+                <li>Project navigation, dependencies</li>
+            </ul>
+            <div class='source'>
+                [9] <a href='http://scala-ide.org/'>Scala IDE for Eclipse</a>
+            </div>
+        </article>
+        
+        <article>
+            <h3>Resources</h3>
+            <ul>
+                <li>How to train the JDT dragon <sup>[10]</sup></li>
+                <li>Java language hacking: throw “error” <sup>[11]</sup></li>
+            </ul>
+            <div class='source'>
+                [10] <a href='http://www.eclipsecon.org/2012/sites/eclipsecon.org.2012/files/How%20To%20Train%20the%20JDT%20Dragon%20combined.pdf'>http://www.eclipsecon.org/2012/sites/&hellip;</a><br>
+                [11] <a href='http://www.ralfebert.de/blog/java_hacking/throw_string/'>http://www.ralfebert.de/blog/java_hacking/throw_string/</a>
+            </div>
+        </article>
+        
+        <article>
+            <h1>
+                Thank you!
+            </h1>
+        </article>
+    </section>    
+</body>
+</html>
